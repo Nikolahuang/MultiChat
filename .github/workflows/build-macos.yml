@@ -13,9 +13,9 @@ jobs:
       matrix:
         include:
           - platform: macos-latest
-            args: --target aarch64-apple-darwin
+            target: aarch64-apple-darwin
           - platform: macos-latest
-            args: --target x86_64-apple-darwin
+            target: x86_64-apple-darwin
 
     runs-on: ${{ matrix.platform }}
 
@@ -26,7 +26,7 @@ jobs:
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.args == '--target aarch64-apple-darwin' && 'aarch64-apple-darwin' || 'x86_64-apple-darwin' }}
+          targets: ${{ matrix.target }}
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
@@ -36,14 +36,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Install frontend dependencies
         run: npm ci
-
-      - name: Install Tauri CLI
-        run: npm install @tauri-apps/cli@latest
 
       - name: Build Tauri app (macOS)
         uses: tauri-apps/tauri-action@v0
@@ -51,12 +48,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tauriScript: npx tauri
-          args: ${{ matrix.args }}
+          args: --target ${{ matrix.target }}
+          tagName: ${{ github.ref_name }}
+          releaseName: 'MultiChat ${{ github.ref_name }}'
+          releaseBody: 'See the assets below to download the installer for your platform.'
+          releaseDraft: true
+          prerelease: false
 
       - name: Upload macOS artifacts
         uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: MultiChat-macOS-${{ matrix.args == '--target aarch64-apple-darwin' && 'arm64' || 'x64' }}
+          name: MultiChat-macOS-${{ matrix.target == 'aarch64-apple-darwin' && 'arm64' || 'x64' }}
           path: |
-            src-tauri/target/release/bundle/dmg/*.dmg
-            src-tauri/target/release/bundle/macos/*.app
+            src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+            src-tauri/target/${{ matrix.target }}/release/bundle/macos/*.app
