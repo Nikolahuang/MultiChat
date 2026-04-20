@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "sessions": {
+    "6855d01ca7674b96aac260eb52a12afa": [
+      {
+        "expertId": "BackendArchitect",
+        "name": "磐石石",
+        "profession": "后端架构师",
+        "avatarUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/avatars/02-Engineering/BackendArchitect/BackendArchitect.png",
+        "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/02-Engineering/BackendArchitect/BackendArchitect_zh.md",
+        "usedAt": 1776609502880,
+        "industryId": "02-Engineering"
+      },
+      {
+        "expertId": "UiDesigner",
+        "name": "像素君",
+        "profession": "UI设计师",
+        "avatarUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/avatars/01-Design/UiDesigner/UiDesigner.png",
+        "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/01-Design/UiDesigner/UiDesigner_zh.md",
+        "usedAt": 1776604396179,
+        "industryId": "all"
+      }
+    ]
+  },
+  "lastUpdated": 1776614459754
+}
